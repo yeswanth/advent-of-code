@@ -1,26 +1,42 @@
 from collections import defaultdict
 
 
-f = open('day6-sample.input').read().strip()
+f = open('day6.input').read().strip()
 fish_timers = [int(x) for x in f.split(',')]
 timers_dict = defaultdict(int)
+for timer in fish_timers:
+    timers_dict[timer] = timers_dict[timer] + 1 
 
-NO_OF_CYCLES = 1 
+
+NO_OF_CYCLES = 256 
 
 def next_cycle(timers):
-    new_timers = []
-    children_fish_timers = []
-    for timer in timers:
+    new_timers_dict = defaultdict(int) 
+    for timer,count in timers.items():
+        if timer > 0:
+            new_timer = timer-1 
+            new_timers_dict[new_timer] = new_timers_dict[new_timer] + count 
+        if timer == 0:
+            new_timer = 6 
+            new_timers_dict[new_timer] = new_timers_dict[new_timer] + count 
+            new_timers_dict[8] = new_timers_dict[8] + count 
+        """
         if timer > 0:
             new_timers.append(timer-1)
         if timer == 0:
             new_timers.append(6) 
             children_fish_timers.append(8)
-    new_timers.extend(children_fish_timers)
-    return new_timers
+        """
+    return new_timers_dict
 
 
 for cycle in range(1,NO_OF_CYCLES+1):
-    fish_timers = next_cycle(fish_timers)
+    timers_dict = next_cycle(timers_dict)
 
-print(len(fish_timers))
+
+total_fish = 0
+for timer,count in timers_dict.items():
+    total_fish = total_fish + count
+print(total_fish)
+
+
