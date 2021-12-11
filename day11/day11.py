@@ -50,13 +50,35 @@ def run_step(matrix):
             increase_number(matrix,i,j,flashed)
     return matrix,len(flashed) 
 
+def is_matrix_0(matrix):
+    m = len(matrix)
+    n = len(matrix[0])
+    matrix_zero = True
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] != 0:
+                matrix_zero = False
+                return matrix_zero
+    return matrix_zero
+
+
+""" Part A
 NO_OF_STEPS = 100 
 total_flashes = 0
 for i in range(NO_OF_STEPS):
     matrix,flashes = run_step(matrix)
     total_flashes = total_flashes + flashes
 
-print("============")
-print(total_flashes)
+#print(total_flashes)
+"""
+
+NO_OF_STEPS = 1000
+for i in range(NO_OF_STEPS):
+    matrix,flashes = run_step(matrix)
+    if is_matrix_0(matrix):
+        break
+print(i+1)
+
+
 
             
