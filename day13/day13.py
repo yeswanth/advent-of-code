@@ -1,4 +1,4 @@
-f = open('day13-sample.input').read()
+f = open('day13.input').read()
 str_lines,str_folds = f.split('\n\n')
 
 dots = []
@@ -78,7 +78,27 @@ def execute_instruction(matrix,dire,value):
     if dire == 'y':
         return fold_horizontal(matrix,value) 
 
+def pretty_print(matrix):
+    print('\n'.join([' '.join([str(cell) for cell in row]) for row in matrix]))
+
+
 matrix_first_fold = execute_instruction(matrix,folds[0][0],folds[0][1])
 #print(count_dots(matrix_first_fold))
+
+
+new_matrix = matrix
+for dire,value in folds:
+    print(dire,value)
+    new_matrix = execute_instruction(new_matrix,dire,value)
+
+pretty_print(new_matrix)
+answer = new_matrix
+for i in range(len(new_matrix)):
+    for j in range(len(new_matrix[0])):
+        if new_matrix[i][j] == 1:
+            answer[i][j] = '#'
+        else:
+            answer[i][j] = '.'
+pretty_print(answer)
 
 
